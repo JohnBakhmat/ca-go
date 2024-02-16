@@ -20,7 +20,7 @@ func main() {
 
 	seed := int64(rand.Intn(100))
 
-	if os.Args[1] != "" {
+	if len(os.Args) >= 2 && os.Args[1] != "" {
 		seed_arg := os.Args[1]
 
 		h := fnv.New64()
