@@ -6,17 +6,15 @@ import (
 )
 
 type Tile rune
+type World [][]Tile
 
 const (
 	WALL_TILE  = '#'
 	FLOOR_TILE = '.'
 )
 
-type World [][]Tile
-
 func main() {
-	w := 50
-	h := 20
+	w, h := 50, 20
 
 	world := make(World, h)
 	for i := range world {
@@ -28,6 +26,11 @@ func main() {
 
 	printWorld(world)
 	addNoise(world, 60, int64(rand.Intn(100)))
+
+	/**
+	  Generate borders to not get index out of bounds exception.
+	  Also out of bounds tile are considered walls anyways.
+	*/
 	addBorders(world)
 	printWorld(world)
 	newWorld := cellularAutomata(world, 3)
@@ -50,6 +53,9 @@ func cellularAutomataRun(world World) World {
 		}
 	}
 
+	/**
+	  Previously we added walls so handle out of bounds so we loop over insides of walls.
+	*/
 	for i := 1; i <= len(world)-2; i++ {
 		for j := 1; j <= len(world[0])-2; j++ {
 
