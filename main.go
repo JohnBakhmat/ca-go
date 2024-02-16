@@ -28,10 +28,10 @@ func main() {
 
 	printWorld(world)
 	addNoise(world, 60, int64(rand.Intn(100)))
-    addBorders(world)
+	addBorders(world)
 	printWorld(world)
-    newWorld := cellularAutomata(world,3)
-    printWorld(newWorld)
+	newWorld := cellularAutomata(world, 3)
+	printWorld(newWorld)
 }
 
 func cellularAutomata(world World, iterations int) World {
@@ -95,7 +95,7 @@ func addNoise(world World, density int, seed int64) {
 
 	for i, row := range world {
 		for j := range row {
-            roll := dice.Intn(100)
+			roll := dice.Intn(100)
 			if roll > density {
 				world[i][j] = FLOOR_TILE
 			}
