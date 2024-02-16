@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"hash/fnv"
 	"math/rand"
+	"os"
 )
 
 type Tile rune
@@ -16,6 +18,16 @@ const (
 func main() {
 	w, h := 50, 20
 
+	seed := int64(rand.Intn(100))
+
+	if os.Args[1] != "" {
+		seed_arg := os.Args[1]
+
+		h := fnv.New64()
+		h.Write([]byte(seed_arg))
+		seed = int64(h.Sum64())
+	}
+
 	world := make(World, h)
 	for i := range world {
 		world[i] = make([]Tile, w)
@@ -25,7 +37,7 @@ func main() {
 	}
 
 	printWorld(world)
-	addNoise(world, 60, int64(rand.Intn(100)))
+	addNoise(world, 60, seed)
 
 	/**
 	  Generate borders to not get index out of bounds exception.
